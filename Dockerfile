@@ -2,7 +2,7 @@ FROM python:latest
 
 WORKDIR .
 
-RUN apt-get install gcc musl-dev
+RUN apt-get install gcc
 
 COPY requirements.txt .
 
