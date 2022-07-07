@@ -8,7 +8,8 @@ from aiogram import Bot, Dispatcher, executor, types
 
 API_TOKEN = os.environ['API_TOKEN']
 URL = 'https://www.ikea.com/ru/ru/'
-WATCH_PHRASE = 'Прием новых заявок запустится немного позже.'
+WATCH_PHRASE_1 = 'Прием новых заявок запустится немного позже'
+WATCH_PHRASE_2 = 'Мы вернём вас на IKEA.ru, как только это будет возможно'
 
 
 logging.basicConfig(level=logging.INFO)
@@ -27,7 +28,10 @@ async def watch(message: types.Message):
     }
     while True:
         resp = s.get(URL, headers=headers)
-        if WATCH_PHRASE not in resp.text:
+        if resp.status_code != 200:
+            await message.answer(f"HTTP code {resp.status_code}: couldn't fetch page")
+            break
+        if WATCH_PHRASE_1 not in resp.text and WATCH_PHRASE_2 not in resp.text:
             await message.answer('Form available. Visit https://www.ikea.com/ru/ru/')
             break
         time.sleep(15)
