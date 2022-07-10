@@ -9,4 +9,4 @@ git pull origin main
 docker stop ikea_bot
 docker image rm ikea_bot:latest -f
 docker build . --tag ikea_bot
-docker run --name ikea_bot_"$date" -e API_token="$token" --restart unless-stopped ikea_bot:latest
+docker run --name ikea_bot_"$date" -e API_TOKEN="$token" --restart unless-stopped ikea_bot:latest
